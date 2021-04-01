@@ -2,10 +2,12 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using RestWithASP_NET5Udemy.Model.Context;
 using RestWithASP_NET5Udemy.Services.Implementations;
 using System;
 using System.Collections.Generic;
@@ -26,7 +28,12 @@ namespace RestWithASP_NET5Udemy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
             services.AddControllers();
+
+            var connection = Configuration["MySQLConnection:MySQLConnection"];
+            services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
+
             //Injeção de dependencia
             services.AddScoped<IPersonService, PersonServiceImplementation>();
         }
