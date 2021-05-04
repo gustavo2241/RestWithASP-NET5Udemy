@@ -30,9 +30,12 @@ namespace RestWithASP_NET5Udemy
         {
             
             services.AddControllers();
-
+            
             var connection = Configuration["MySQLConnection:MySQLConnection"];
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection));
+
+            //API de versionamento
+            services.AddApiVersioning();
 
             //Injeção de dependencia
             services.AddScoped<IPersonService, PersonServiceImplementation>();
